@@ -11,20 +11,19 @@ The application is designed with a decoupled architecture, separating the user-f
 ### 1.1. Architecture Diagram
 
 ```mermaid
-```mermaid
 graph TD
     subgraph User Interaction
-        U[User's Browser] -- Manages criteria & views properties --> FE([Angular Frontend]);
+        U[User's Browser] -- Manages criteria & views properties --> FE[Angular Frontend];
     end
 
     subgraph API Layer
-        FE -- REST API Calls --> API[Backend API (Python)];
+        FE -- REST API Calls --> API[Backend API];
         API -- SQL Queries --> DB[(Turso Database)];
     end
 
-    subgraph Background Services (Python)
+    subgraph Background Services
         subgraph Scraping Process
-            Sched(Scheduler <br> Every 5 mins) --> Scraper[Scraper Service];
+            Sched[Scheduler <br> Every 5 mins] --> Scraper[Scraper Service];
             Scraper -- Reads criteria --> DB;
             Scraper -- Scrapes data --> RWS[Real Estate Websites];
             Scraper -- Inserts new property --> DB;
@@ -34,7 +33,7 @@ graph TD
             DB -- DB Trigger or CDC --> NQ[Notification Queue];
             Notifier[Notifier Service] -- Consumes jobs --> NQ;
             Notifier -- Reads property details & email list --> DB;
-            Notifier -- Sends notifications --> Mail(Email Service);
+            Notifier -- Sends notifications --> Mail[Email Service];
         end
     end
 ```
