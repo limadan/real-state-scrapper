@@ -17,7 +17,7 @@ graph TD
     end
 
     subgraph API Layer
-        FE -- REST/GraphQL API Calls --> API[Backend API];
+        FE -- REST API Calls --> API[Backend API];
         API -- SQL Queries --> DB[(Turso Database)];
     end
 
@@ -28,9 +28,6 @@ graph TD
         Worker -- Checks for new properties & inserts --> DB;
         Worker -- Sends notifications --> Mail(Email Service);
     end
-
-    style Sched fill:#f9f,stroke:#333,stroke-width:2px
-    style Worker fill:#ccf,stroke:#333,stroke-width:2px
 ```
 
 # 1.2. Component Breakdown
