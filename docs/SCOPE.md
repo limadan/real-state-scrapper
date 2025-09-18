@@ -17,7 +17,7 @@ This tool aims to solve these problems by:
 ## 3. Core Features
 ### 3.1. User-Defined Search Criteria
 
-The user will be able to configure and save their search profiles with specific criteria, including but not limited to:
+The user will be able to configure and save his specific criteria, including but not limited to:
 - Location: Neighborhood, city, or zip code.
 - Price Range: Minimum and maximum cost (for rent or purchase).
 - Property Type: Apartment, house, condo, etc.
@@ -34,7 +34,7 @@ A robust and scalable scraping module responsible for:
 
 ### 3.3. Real-Time Email Notification System
 As soon as the scraper finds a new property that matches a user's saved criteria, the system will trigger an automated email.
-The email will contain a summary of the property's key details and a direct link to the original listing. Users can toggle notifications on or off for each of their search profiles.
+The email will contain a summary of the property's key details and a direct link to the original listing.
 
 ### 3.4. Interactive Dashboard
 
@@ -42,7 +42,7 @@ A user-friendly web interface where users can:
 - **View all matched properties:** Displayed in a card or list format, with key information and images.
 - **Filter and Sort:** Easily filter the found properties by price, date found, location, etc.
 - **Visualize on a Map:** Plot all properties on an interactive map to understand their geographical distribution.
-- **Manage Search Profiles:** Create, edit, or delete their search criteria.
+- **Manage Search:** Create, edit, or delete their search criteria.
 - **Mark Favorites:** Users can "favorite" or "discard" properties to keep their dashboard organized.
 
 ## 3.5. AI-Powered Property Analysis
