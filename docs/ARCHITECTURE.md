@@ -11,55 +11,63 @@ The application is designed with a decoupled architecture, separating the user-f
 ### 1.1. Architecture Diagram
 
 ```mermaid
+```mermaid
 graph TD
     subgraph User Interaction
         U[User's Browser] -- Manages criteria & views properties --> FE([Angular Frontend]);
     end
 
     subgraph API Layer
-        FE -- REST API Calls --> API[Backend API];
+        FE -- REST API Calls --> API[Backend API (Python)];
         API -- SQL Queries --> DB[(Turso Database)];
     end
 
-    subgraph Background Services
-        Sched(Scheduler <br> Every 5 mins) --> Worker[Scraper & Notifier];
-        Worker -- Reads criteria & emails --> DB;
-        Worker -- Scrapes data --> RWS[Real Estate Websites];
-        Worker -- Checks for new properties & inserts --> DB;
-        Worker -- Sends notifications --> Mail(Email Service);
+    subgraph Background Services (Python)
+        subgraph Scraping Process
+            Sched(Scheduler <br> Every 5 mins) --> Scraper[Scraper Service];
+            Scraper -- Reads criteria --> DB;
+            Scraper -- Scrapes data --> RWS[Real Estate Websites];
+            Scraper -- Inserts new property --> DB;
+        end
+
+        subgraph Notification Process
+            DB -- DB Trigger or CDC --> NQ[Notification Queue];
+            Notifier[Notifier Service] -- Consumes jobs --> NQ;
+            Notifier -- Reads property details & email list --> DB;
+            Notifier -- Sends notifications --> Mail(Email Service);
+        end
     end
 ```
 
 # 1.2. Component Breakdown
 
 ## Frontend (Angular)
-A single-page application (SPA) that provides the user interface. Its responsibilities are:
+A single-page application (SPA) that provides the user interface.  
+It communicates exclusively with the Backend API.
 
-- Displaying the found real estate properties in an interactive dashboard.
-- Allowing the user to manage the `search_criteria` table (add, edit, delete search profiles).
-- Allowing the user to manage the `email_list` table.
-- It communicates exclusively with the Backend API.
+---
 
-## Backend API
-A server-side application that acts as the bridge between the frontend and the database.
+## Backend API (Python)
+The central hub for user interactions.
 
 - Provides CRUD (Create, Read, Update, Delete) endpoints for `search_criteria` and `email_list`.
 - Provides an endpoint to read properties from the database for display on the dashboard.
-- Handles authentication and authorization (if implemented in the future).
-- Connects directly to the Turso Database to execute SQL queries.
+- Connects directly to the Turso Database.
 
-## Background Worker (Scraper & Notifier)
-A standalone service or a set of scripts that run independently from the user-facing application.
+## Scraper Service (Python)
+A dedicated background service with a single responsibility: **finding and storing properties**.
 
-- **Scheduler:** Triggered every 5 minutes by a cron job or a similar scheduling mechanism.
-- **Scraper:** Fetches data from target real estate websites. It reads the active search criteria from the database to perform the searches.
-- **Notifier:** When a new property that matches the criteria is found, this component is responsible for sending a notification email to all addresses in the `email_list`.
+- Triggered every 5 minutes by a scheduler (like a cron job).
+- Reads the latest search criteria from the database.
+- Scrapes target websites, checks for new properties that match the criteria, and inserts them into the `real_state_property` table.
+
+## Notifier Service (Python)
+An independen service responsible for sending notifications. Observes the database for newly inserted properties. When a new property is detected:
+  - Reads the property details and the full `email_list` from the database.
+  - Sends a notification to all registered email addresses.
 
 ## Database (Turso DB)
-A distributed SQLite database (using libSQL) that acts as the single source of truth for the application.  
-It stores all persistent data.
-
----
+The central data store for the entire application.
 
 # 2. Core Workflow (Scraping & Notification)
 

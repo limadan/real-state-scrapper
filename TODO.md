@@ -8,11 +8,10 @@
 - [ ] Set up scheduled scraping tasks.
 
 ## Phase 2: Interactive Dashboard
-- [ ] Develop the user authentication system (signup/login).
 - [ ] Build the frontend for the dashboard.
 - [ ] Create the API endpoints to connect the frontend and backend.
 - [ ] Implement the property visualization (cards, map).
-- [ ] Allow users to create and manage search profiles through the UI.
+- [ ] Allow user   to create and manage search criteria through the UI.
 
 ## Phase 3: AI Analysis Integration
 - [ ] Integrate with an LLM API.
