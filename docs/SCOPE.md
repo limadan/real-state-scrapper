@@ -1,7 +1,7 @@
 # Real Estate Scraper & AI-Powered Analyzer
 
 ## 1. Overview
-This project is an intelligent real estate scraping tool designed to automate the search for properties based on user-defined criteria. When a matching property is found on specified real estate websites, the system will instantly notify the user via email.
+This project is an intelligent real estate scraping tool designed to automate the search for properties based on user-defined criteria. The system will send a weekly email digest summarizing all new properties that match the user's search.
 
 Furthermore, all discovered properties will be aggregated and displayed on an interactive dashboard. This dashboard will not only allow users to track their findings but will also feature an AI-powered analysis to provide deeper insights into each property, such as market value comparison, investment potential, and neighborhood analysis.
 
@@ -10,7 +10,7 @@ The process of searching for a new property to rent or buy is often tedious, rep
 
 This tool aims to solve these problems by:
 - Automating the repetitive search process.
-- Providing instant notifications so users never miss a good opportunity.
+- Providing regular, consolidated notifications so users can review new properties at their convenience.
 - Centralizing all findings in a single, easy-to-use interface.
 - Offering data-driven insights through AI to empower users to make better-informed decisions.
 
@@ -32,9 +32,9 @@ A robust and scalable scraping module responsible for:
 - Handling anti-scraping mechanisms like CAPTCHAs and dynamic JavaScript-loaded content.
 - Storing the structured data into a centralized database.
 
-### 3.3. Real-Time Email Notification System
-As soon as the scraper finds a new property that matches a user's saved criteria, the system will trigger an automated email.
-The email will contain a summary of the property's key details and a direct link to the original listing.
+### 3.3. Weekly Email Notification System
+The system will send a weekly summary email to users.
+This email will contain a digest of all new properties found during the week that match their saved criteria, with key details and direct links to the original listings.
 
 ### 3.4. Interactive Dashboard
 

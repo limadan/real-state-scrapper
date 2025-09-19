@@ -23,17 +23,15 @@ graph TD
 
     subgraph Background Services
         subgraph Scraping Process
-            Sched[Scheduler <br> Every 5 mins] --> Scraper[Scraper Service];
+            Sched[Scheduler <br> Daily/Hourly] --> Scraper[Scraper Service];
             Scraper -- Reads criteria --> DB;
             Scraper -- Scrapes data --> RWS[Real Estate Websites];
             Scraper -- Inserts new property --> DB;
         end
-
-        subgraph Notification Process
-            DB -- DB Trigger or CDC --> NQ[Notification Queue];
-            Notifier[Notifier Service] -- Consumes jobs --> NQ;
-            Notifier -- Reads property details & email list --> DB;
-            Notifier -- Sends notifications --> Mail[Email Service];
+        subgraph Notifier Process
+            WeeklySched[Weekly Scheduler] --> Notifier[Notifier Service];
+            Notifier -- Reads new properties & email list --> DB;
+            Notifier -- Sends weekly digest --> Mail[Email Service];
         end
     end
 ```
