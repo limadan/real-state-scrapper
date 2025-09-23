@@ -98,7 +98,3 @@ PLAYWRIGHT_LAUNCH_OPTIONS = {
     "headless": False,
     "timeout": 30 * 1000
 }
-
-FEEDS = {
-    "quintoandar.json": {"format": "json", "encoding": "utf8", "overwrite": True}
-}

@@ -95,32 +95,32 @@ The database is designed to be simple and efficient for the project's core needs
 erDiagram
     real_state_property {
         INTEGER id PK "Auto-incrementing primary key"
-        VARCHAR source_id "Unique ID from the source website"
-        VARCHAR source_website "Domain of the source website (e.g., zillow.com)"
+        TEXT source_id "Unique ID from the source website"
+        TEXT source_website "Domain of the source website (e.g., zillow.com)"
         DECIMAL price "Property price"
-        VARCHAR city
-        VARCHAR neighbourhood
+        TEXT city
+        TEXT neighbourhood
         INTEGER number_of_rooms
         INTEGER number_of_parking_spaces
-        VARCHAR photo_url "URL of the main photo"
-        VARCHAR access_link "URL to the original listing"
+        TEXT photo_url "URL of the main photo"
+        TEXT access_link "URL to the original listing"
+        TEXT state "Property state (e.g., available, sold)"
         DATETIME created_at "Timestamp of when the record was inserted"
     }
 
     search_criteria {
         INTEGER id PK "Auto-incrementing primary key"
-        VARCHAR city
-        VARCHAR neighbourhood
+        TEXT city
+        TEXT neighbourhoods
+        TEXT state
         DECIMAL min_price
         DECIMAL max_price
         INTEGER min_number_of_rooms
-        INTEGER max_number_of_rooms
         INTEGER min_number_of_parking_spaces
-        INTEGER max_number_of_parking_spaces
     }
 
     email_list {
-        VARCHAR email PK "User's email address"
+        TEXT email PK "User's email address"
     }
 ```
 
@@ -132,15 +132,14 @@ Stores the details of each unique property found by the scraper.
 | Column                    | Data Type      | Constraints                   | Description                                         |
 |---------------------------|----------------|--------------------------------|-----------------------------------------------------|
 | id                        | INTEGER        | PRIMARY KEY                   | Unique identifier for the record.                   |
-| source_id                 | VARCHAR(255)   | NOT NULL                      | The property ID from the original website.          |
-| source_website            | VARCHAR(255)   | NOT NULL                      | The domain of the website (e.g., quintoandar.com.br).|
+| source_id                 | TEXT   | NOT NULL                      | The property ID from the original website.          |
+| source_website            | TEXT   | NOT NULL                      | The domain of the website (e.g., quintoandar.com.br).|
 | price                     | DECIMAL(12, 2) | NOT NULL                      | The listed price of the property.                   |
-| city                      | VARCHAR(255)   | NOT NULL                      | City where the property is located.                 |
-| neighbourhood             | VARCHAR(255)   | NOT NULL                      | Neighbourhood where the property is located.        |
+| address                   | TEXT   | NOT NULL                      | The address of the property.                        |
 | number_of_rooms           | INTEGER        |                                | Number of bedrooms/rooms.                           |
 | number_of_parking_spaces  | INTEGER        |                                | Number of parking spaces available.                 |
-| photo_url                 | VARCHAR(2048)  |                                | A direct URL to a photo of the property.            |
-| access_link               | VARCHAR(2048)  | NOT NULL                      | A direct URL to the property listing page.          |
+| photo_url                 | TEXT  |                                | A direct URL to a photo of the property.            |
+| access_link               | TEXT  | NOT NULL                      | A direct URL to the property listing page.          |
 | created_at                | DATETIME       |                                | Timestamp when the property was added.              |
 
 **Constraint:**  
@@ -154,15 +153,13 @@ Stores the search profiles used by the scraper. For this simple model, it can ho
 | Column                      | Data Type      | Constraints   | Description                        |
 |-----------------------------|----------------|---------------|------------------------------------|
 | id                          | INTEGER        | PRIMARY KEY   | Unique identifier for the search profile. |
-| city                        | VARCHAR(255)   |               | Target city for the search.        |
-| neighbourhood               | VARCHAR(255)   |               | Target neighbourhood for the search. |
+| state                       | TEXT   |               | Target state for the search.       |
+| city                        | TEXT   |               | Target city for the search.        |
+| neighbourhoods               | TEXT   |               | Target neighbourhoods for the search. Separated by comma (","). |
 | min_price                   | DECIMAL(12, 2) |               | Minimum desired price.              |
 | max_price                   | DECIMAL(12, 2) |               | Maximum desired price.              |
-| min_number_of_rooms         | INTEGER        |               | Minimum number of rooms.            |
-| max_number_of_rooms         | INTEGER        |               | Maximum number of rooms.            |
+| min_number_of_rooms         | INTEGER        |               | Minimum number of rooms.            |         |
 | min_number_of_parking_spaces| INTEGER        |               | Minimum number of parking spaces.   |
-| max_number_of_parking_spaces| INTEGER        |               | Maximum number of parking spaces.   |
-
 ---
 
 ### email_list
@@ -170,4 +167,4 @@ A simple table to hold all email addresses that should receive notifications.
 
 | Column | Data Type    | Constraints   | Description                    |
 |--------|--------------|---------------|--------------------------------|
-| email  | VARCHAR(255) | PRIMARY KEY   | The email address to be notified. |
+| email  | TEXT | PRIMARY KEY   | The email address to be notified. |

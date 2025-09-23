@@ -8,3 +8,6 @@ venv/
 
 # IDE / Editor specific
 .vscode/
+
+# Environment variables
+.env
