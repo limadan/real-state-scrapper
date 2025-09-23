@@ -1,9 +1,9 @@
 # Project Roadmap
 
 ## Phase 1: Core Scraping and Notification MVP
-- [ ] Develop the scraper for one or two target websites.
-- [ ] Set up the database schema for properties and user criteria.
-- [ ] Implement a command-line interface (CLI) to input search criteria.
+- [X] Develop the scraper for one or two target websites.
+- [X] Set up the database schema for properties and user criteria.
+- [ ] Set up the script to store scraped data in the database.
 - [ ] Build the basic email notification system.
 - [ ] Set up scheduled scraping tasks.
 
