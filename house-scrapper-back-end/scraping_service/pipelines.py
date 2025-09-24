@@ -6,8 +6,12 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from database.db_client import insert_property
 
 
 class ScrapingServicePipeline:
     def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        property_data = dict(adapter)
+        insert_property(property_data)
         return item

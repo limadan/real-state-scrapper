@@ -1,6 +1,7 @@
 import scrapy
 from datetime import datetime
 from database.db_client import get_search_criteria
+from scraping_service.items import RealStatePropertyItem
 import json
 import time
 
@@ -42,8 +43,6 @@ class LoftSpider(scrapy.Spider):
         url = f"https://loft.com.br/venda/imoveis/{state_path}/{city_path}"
 
         params = []
-        if max_price:
-            params.append(f"precoMax={int(max_price)}")
         if min_rooms:
             params.append(f"quartos={int(min_rooms)}")
         if min_parking:
@@ -62,7 +61,9 @@ class LoftSpider(scrapy.Spider):
         criteria = response.meta['criteria']
         page = response.meta['page']
 
-        state, city, neighbourhoods, min_price, *_ = criteria
+        state, city, neighbourhoods, min_price, max_price, *_ = criteria
+
+        print(criteria)
 
         scripts = response.css('script[type="application/ld+json"]::text').getall()
 
@@ -85,13 +86,14 @@ class LoftSpider(scrapy.Spider):
             match = re.search(r'R\$ ([\d\.,]+)', description)
             if match:
                 price = float(match.group(1).replace('.', '').replace(',', '.'))
-
             if price is not None and min_price is not None and price < min_price:
+                continue
+            if price is not None and max_price is not None and price > max_price:
                 continue
 
             address_info = data.get('address', {})
             street = address_info.get('streetAddress')
-            city_name = address_info.get('addressLocality')
+            neighbourhood_name = address_info.get('addressLocality')
             state_name = address_info.get('addressRegion')
 
             amenities = prop.css(amenities_selector).xpath("string()").getall()
@@ -101,18 +103,17 @@ class LoftSpider(scrapy.Spider):
             photo_url = data.get('photo', {}).get('url')
             created_at = datetime.utcnow().isoformat()
 
-            yield {
-                "source_id": source_id,
-                "source_website": "loft.com.br",
-                "price": price,
-                "city": city_name,
-                "address": street,
-                "number_of_rooms": number_of_rooms,
-                "number_of_parking_spaces": number_of_parking_spaces,
-                "photo_url": photo_url,
-                "access_link": access_link,
-                "created_at": created_at,
-            }
+            item = RealStatePropertyItem()
+            item['source_id'] = source_id
+            item['source_website'] = "loft.com.br"
+            item['price'] = price
+            item['address'] = ", ".join([street, neighbourhood_name, city, state])
+            item['number_of_rooms'] = number_of_rooms
+            item['number_of_parking_spaces'] = number_of_parking_spaces
+            item['photo_url'] = photo_url
+            item['access_link'] = access_link
+            item['created_at'] = created_at
+            yield item
 
         if scripts:
             next_page = page + 1

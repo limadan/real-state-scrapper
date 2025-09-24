@@ -6,7 +6,13 @@
 import scrapy
 
 
-class ScrapingServiceItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class RealStatePropertyItem(scrapy.Item):
+    source_id = scrapy.Field()
+    source_website = scrapy.Field()
+    price = scrapy.Field()
+    address = scrapy.Field()
+    number_of_rooms = scrapy.Field()
+    number_of_parking_spaces = scrapy.Field()
+    photo_url = scrapy.Field()
+    access_link = scrapy.Field()
+    created_at = scrapy.Field()

@@ -57,10 +57,10 @@ DOWNLOAD_DELAY = 1
 #}
 
 # Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "scraping_service.pipelines.ScrapingServicePipeline": 300,
-#}
+# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+ITEM_PIPELINES = {
+    "scraping_service.pipelines.ScrapingServicePipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
