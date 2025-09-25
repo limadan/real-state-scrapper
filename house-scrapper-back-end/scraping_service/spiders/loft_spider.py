@@ -61,7 +61,7 @@ class LoftSpider(scrapy.Spider):
         criteria = response.meta['criteria']
         page = response.meta['page']
 
-        state, city, neighbourhoods, min_price, max_price, *_ = criteria
+        state, city, neighbourhoods, min_price, max_price, min_rooms, min_parking= criteria
 
         print(criteria)
 
@@ -99,6 +99,12 @@ class LoftSpider(scrapy.Spider):
             amenities = prop.css(amenities_selector).xpath("string()").getall()
             number_of_rooms = self.parse_int_from_string(amenities[1]) if len(amenities) > 1 else None
             number_of_parking_spaces = self.parse_int_from_string(amenities[2]) if len(amenities) > 2 else None
+
+            if(number_of_rooms is not None and min_rooms is not None and number_of_rooms < min_rooms):
+                continue
+            
+            if(number_of_parking_spaces is not None and min_parking is not None and number_of_parking_spaces < min_parking):
+                continue
 
             photo_url = data.get('photo', {}).get('url')
             created_at = datetime.utcnow().isoformat()

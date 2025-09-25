@@ -98,13 +98,13 @@ erDiagram
         TEXT source_id "Unique ID from the source website"
         TEXT source_website "Domain of the source website (e.g., zillow.com)"
         DECIMAL price "Property price"
-        TEXT city
-        TEXT neighbourhood
+        TEXT address
         INTEGER number_of_rooms
         INTEGER number_of_parking_spaces
         TEXT photo_url "URL of the main photo"
         TEXT access_link "URL to the original listing"
-        TEXT state "Property state (e.g., available, sold)"
+        BOOLEAN seen
+        BOOLEAN favorite
         DATETIME created_at "Timestamp of when the record was inserted"
     }
 
@@ -140,6 +140,8 @@ Stores the details of each unique property found by the scraper.
 | number_of_parking_spaces  | INTEGER        |                                | Number of parking spaces available.                 |
 | photo_url                 | TEXT  |                                | A direct URL to a photo of the property.            |
 | access_link               | TEXT  | NOT NULL                      | A direct URL to the property listing page.          |
+| seen               | BOOLEAN  | NOT NULL                      | A boolean value to determine whether a property was seen          |
+| seen               | BOOLEAN  | NOT NULL                      | A boolean value to determine whether a property has been marked as favorite          |
 | created_at                | DATETIME       |                                | Timestamp when the property was added.              |
 
 **Constraint:**  
