@@ -1,0 +1,37 @@
+name: Weekly Notification
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9:00 AM UTC
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        cd house-scrapper-back-end
+        pip install -r requirements.txt
+
+    - name: Run Notification Service
+      env:
+        TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
+        TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        EMAIL_USER: ${{ secrets.EMAIL_USER }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+      run: |
+        cd house-scrapper-back-end
+        python -m notifier_service.main

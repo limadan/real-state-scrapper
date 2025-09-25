@@ -1,0 +1,32 @@
+name: Hourly Scraping
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        cd house-scrapper-back-end
+        pip install -r requirements.txt
+
+    - name: Run Scrapy spider
+      env:
+        TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
+        TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+      run: |
+        cd house-scrapper-back-end
+        scrapy crawl loft

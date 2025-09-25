@@ -4,8 +4,8 @@
 - [X] Develop the scraper for one or two target websites.
 - [X] Set up the database schema for properties and user criteria.
 - [x] Set up the functionality to store scraped data in the database.
-- [X] Build the basic email notification system.
-- [ ] Set up scheduled scraping tasks.
+- [X] Build the basic email n@otification system.
+- [X] Set up scheduled scraping tasks.
 - [ ] Add basic logs to the scraper
 
 ## Phase 2: Interactive Dashboard
