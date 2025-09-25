@@ -1,4 +1,5 @@
 import logging
+from database.db_client import insert_log
 from .db_queries import get_unseen_properties, get_email_list, mark_properties_seen
 from .email_service import send_notification_email
 
@@ -12,12 +13,16 @@ def main():
     try:
         properties = get_unseen_properties(10)
         if not properties:
-            logger.info("No unseen properties found.")
+            message = "No unseen properties found."
+            logger.info(message)
+            insert_log('INFO', message, 'notifier')
             return
 
         emails = get_email_list()
         if not emails:
-            logger.warning("No emails in the email list.")
+            message = "No emails in the email list."
+            logger.warning(message)
+            insert_log('WARNING', message, 'notifier')
             return
 
         send_notification_email(emails, properties)
@@ -25,10 +30,14 @@ def main():
         property_ids = [prop[0] for prop in properties]
         mark_properties_seen(property_ids)
 
-        logger.info(f"Successfully sent notification for {len(properties)} properties to {len(emails)} email(s).")
+        message = f"Successfully sent notification for {len(properties)} properties to {len(emails)} email(s)."
+        logger.info(message)
+        insert_log('INFO', message, 'notifier')
 
     except Exception as e:
-        logger.error(f"Error in notification service: {e}")
+        message = f"Error in notification service: {e}"
+        logger.error(message)
+        insert_log('ERROR', message, 'notifier')
         raise
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import scrapy
 from datetime import datetime
-from database.db_client import get_search_criteria
+from database.db_client import get_search_criteria, insert_log
 from scraping_service.items import RealStatePropertyItem
 import json
 import time
@@ -20,6 +20,9 @@ class LoftSpider(scrapy.Spider):
         Initializes requests for each search criterion for the first page.
         The page number is passed via request metadata.
         """
+        message = "Scraping run started."
+        self.logger.info(message)
+        insert_log('INFO', message, 'scraping')
         criteria_list = get_search_criteria()
         for criteria in criteria_list:
             # Start each search from page 1
@@ -94,7 +97,6 @@ class LoftSpider(scrapy.Spider):
             address_info = data.get('address', {})
             street = address_info.get('streetAddress')
             neighbourhood_name = address_info.get('addressLocality')
-            state_name = address_info.get('addressRegion')
 
             amenities = prop.css(amenities_selector).xpath("string()").getall()
             number_of_rooms = self.parse_int_from_string(amenities[1]) if len(amenities) > 1 else None
@@ -151,4 +153,14 @@ class LoftSpider(scrapy.Spider):
             return int(''.join(filter(str.isdigit, text)))
         except (ValueError, IndexError):
             return None
+
+    def closed(self, reason):
+        if reason == 'finished':
+            message = "Scraping run ended successfully."
+            self.logger.info(message)
+            insert_log('INFO', message, 'scraping')
+        else:
+            message = f"Scraping run ended with error. Reason: {reason}"
+            self.logger.error(message)
+            insert_log('ERROR', message, 'scraping')
 

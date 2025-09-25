@@ -86,6 +86,10 @@ ITEM_PIPELINES = {
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
 
+# Logging configuration
+LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
+LOG_DATEFORMAT = '%Y-%m-%d %H:%M:%S'
+
 # settings.py
 DOWNLOAD_HANDLERS = {
     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",

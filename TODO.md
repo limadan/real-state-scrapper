@@ -6,7 +6,7 @@
 - [x] Set up the functionality to store scraped data in the database.
 - [X] Build the basic email n@otification system.
 - [X] Set up scheduled scraping tasks.
-- [ ] Add basic logs to the scraper
+- [X] Add basic logs to the scraper
 
 ## Phase 2: Interactive Dashboard
 - [ ] Build the frontend for the dashboard.
