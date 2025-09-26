@@ -21,16 +21,6 @@ def add_email(email):
     conn.commit()
     conn.close()
 
-def update_email(email_id, new_email):
-    """
-    Updates an email in the list.
-    """
-    conn = get_db_connection()
-    query = "UPDATE email_list SET email = ? WHERE email = ?"
-    conn.execute(query, (new_email, email_id))
-    conn.commit()
-    conn.close()
-
 def delete_email(email_id):
     """
     Deletes an email from the list.

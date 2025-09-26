@@ -22,10 +22,16 @@ def update_search_criteria(state, city, neighbourhoods, min_price, max_price, mi
     """
     conn = get_db_connection()
     query = """
-        UPDATE search_criteria
-        SET state = ?, city = ?, neighbourhoods = ?, min_price = ?, max_price = ?,
-            min_number_of_rooms = ?, min_number_of_parking_spaces = ?
-        WHERE id = 1  -- Assuming single criteria row
+        INSERT INTO search_criteria (id, state, city, neighbourhoods, min_price, max_price, min_number_of_rooms, min_number_of_parking_spaces)
+        VALUES (1, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+            state = excluded.state,
+            city = excluded.city,
+            neighbourhoods = excluded.neighbourhoods,
+            min_price = excluded.min_price,
+            max_price = excluded.max_price,
+            min_number_of_rooms = excluded.min_number_of_rooms,
+            min_number_of_parking_spaces = excluded.min_number_of_parking_spaces;
     """
     conn.execute(query, (state, city, neighbourhoods, min_price, max_price, min_number_of_rooms, min_number_of_parking_spaces))
     conn.commit()
