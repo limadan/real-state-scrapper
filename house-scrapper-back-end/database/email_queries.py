@@ -5,9 +5,9 @@ def get_email_list():
     Retrieves the list of email addresses from the database.
     """
     conn = get_db_connection()
-    query = "SELECT id, email FROM email_list"
+    query = "SELECT email FROM email_list"
     cursor = conn.execute(query)
-    results = cursor.fetchall()
+    results = [row[0] for row in cursor.fetchall()]
     conn.close()
     return results
 
@@ -26,7 +26,7 @@ def update_email(email_id, new_email):
     Updates an email in the list.
     """
     conn = get_db_connection()
-    query = "UPDATE email_list SET email = ? WHERE id = ?"
+    query = "UPDATE email_list SET email = ? WHERE email = ?"
     conn.execute(query, (new_email, email_id))
     conn.commit()
     conn.close()
@@ -36,7 +36,7 @@ def delete_email(email_id):
     Deletes an email from the list.
     """
     conn = get_db_connection()
-    query = "DELETE FROM email_list WHERE id = ?"
+    query = "DELETE FROM email_list WHERE email = ?"
     conn.execute(query, (email_id,))
     conn.commit()
     conn.close()

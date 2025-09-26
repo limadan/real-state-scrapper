@@ -1,8 +1,13 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import logging
 from database.log_queries import insert_log
 from database.real_state_property_queries import get_unseen_properties, mark_properties_seen
 from database.email_queries import get_email_list
-from .email_service import send_notification_email
+
+from email_service import send_notification_email
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
