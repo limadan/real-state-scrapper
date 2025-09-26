@@ -29,4 +29,4 @@ jobs:
         TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
       run: |
         cd house-scrapper-back-end
-        scrapy crawl loft
+        app=production scrapy crawl loft

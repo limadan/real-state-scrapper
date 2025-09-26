@@ -1,6 +1,7 @@
 import scrapy
 from datetime import datetime
-from database.db_client import get_search_criteria, insert_log
+from database.search_criteria_queries import get_search_criteria
+from database.log_queries import insert_log
 from scraping_service.items import RealStatePropertyItem
 import json
 import time
@@ -23,26 +24,24 @@ class LoftSpider(scrapy.Spider):
         message = "Scraping run started."
         self.logger.info(message)
         insert_log('INFO', message, 'scraping')
-        criteria_list = get_search_criteria()
-        for criteria in criteria_list:
-            # Start each search from page 1
-            page = 1
-            url = self.build_url(criteria, page)
-            yield scrapy.Request(
-                url, 
-                callback=self.parse, 
-                meta={'criteria': criteria, 'page': page}
-            )
+        criteria = get_search_criteria()[0]
+        page = 1
+        url = self.build_url(criteria, page)
+        yield scrapy.Request(
+            url, 
+            callback=self.parse, 
+            meta={'criteria': criteria, 'page': page}
+        )
 
     def build_url(self, criteria, page=1):
         """
         Constructs the URL for a given search criterion and page number.
         """
-        state, city, neighbourhoods, min_price, max_price, min_rooms, min_parking = criteria
-        
-        state_path = state.lower().replace(" ", "-")
-        city_path = city.lower().replace(" ", "-")
-        
+        state, city, neighbourhoods, _, _, min_rooms, min_parking = criteria
+
+        state_path = state.lower().replace(" ", "-") if state else "sp"
+        city_path = city.lower().replace(" ", "-") if city else "sao-paulo"
+
         url = f"https://loft.com.br/venda/imoveis/{state_path}/{city_path}"
 
         params = []
@@ -58,15 +57,14 @@ class LoftSpider(scrapy.Spider):
         if params:
             url += "?" + "&".join(params)
 
+        self.logger.info(f"Built URL: {url}")
         return url
 
     def parse(self, response):
         criteria = response.meta['criteria']
         page = response.meta['page']
 
-        state, city, neighbourhoods, min_price, max_price, min_rooms, min_parking= criteria
-
-        print(criteria)
+        state, city, _, min_price, max_price, min_rooms, min_parking= criteria
 
         scripts = response.css('script[type="application/ld+json"]::text').getall()
 
@@ -115,7 +113,7 @@ class LoftSpider(scrapy.Spider):
             item['source_id'] = source_id
             item['source_website'] = "loft.com.br"
             item['price'] = price
-            item['address'] = ", ".join([street, neighbourhood_name, city, state])
+            item['address'] = ", ".join([street, neighbourhood_name, city if city else '', state if state else '']).strip(", ")
             item['number_of_rooms'] = number_of_rooms
             item['number_of_parking_spaces'] = number_of_parking_spaces
             item['photo_url'] = photo_url

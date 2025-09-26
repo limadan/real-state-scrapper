@@ -144,9 +144,6 @@ Stores the details of each unique property found by the scraper.
 | seen               | BOOLEAN  | NOT NULL                      | A boolean value to determine whether a property has been marked as favorite          |
 | created_at                | DATETIME       |                                | Timestamp when the property was added.              |
 
-**Constraint:**  
-`UNIQUE(source_id, source_website)` → Ensures no duplicate properties are inserted.
-
 ---
 
 ### search_criteria

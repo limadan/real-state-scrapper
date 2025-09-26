@@ -4,7 +4,8 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 from itemadapter import ItemAdapter
-from database.db_client import insert_property, insert_log
+from database.real_state_property_queries import insert_property
+from database.log_queries import insert_log
 
 class ScrapingServicePipeline:
     def process_item(self, item, spider):
