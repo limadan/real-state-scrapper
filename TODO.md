@@ -11,12 +11,13 @@
 ## Phase 2: Interactive Dashboard
 - [ ] Back-end work
     - [X] Refactor db_client file to better assing responsibilities across modules (email_queries, property_queries and real_state_property_queries)
-    - [ ] Create the API that will be consumed by the frontend.
-        - [ ] Create GET endpoint to properties (get all, get only favorites)
-        - [ ] Create PUT endpoint to update search criteria.
-        - [ ] Create GET endpoint to get search criteria.
-        - [ ] Create PUT endpoint to favorite and unfavorite a property.
-        - [ ] Create GET, POST, PUT and DELETE endpoints to email list
+    - [X] Create the API that will be consumed by the frontend.
+        - [X] Create GET endpoint to properties (get all, get only favorites)
+        - [X] Create PUT endpoint to update search criteria.
+        - [X] Create GET endpoint to get search criteria.
+        - [X] Create PUT endpoint to favorite and unfavorite a property.
+        - [X] Create GET, POST and DELETE endpoints to email list
+        - [X] Implement a basic JWT authentication system
 
 - [ ] Front-end work
     - [ ] Create the templates for the base components that will be used in the dashboard.
