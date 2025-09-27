@@ -1,0 +1,37 @@
+<p-card class="property-card">
+  <ng-template pTemplate="header">
+    <img [src]="property.imageUrl" [alt]="property.title" class="property-image" />
+  </ng-template>
+  <ng-template pTemplate="title">
+    {{ property.title }}
+  </ng-template>
+  <ng-template pTemplate="subtitle">
+    {{ property.address }}
+  </ng-template>
+  <p class="price">${{ property.price | number }}</p>
+  <div class="property-details">
+    <span class="detail-item">
+      <i class="pi pi-bed"></i> {{ property.bedrooms }} beds
+    </span>
+    <span class="detail-item">
+      <i class="pi pi-bath"></i> {{ property.bathrooms }} baths
+    </span>
+    <span class="detail-item">
+      <i class="pi pi-home"></i> {{ property.area }} sqft
+    </span>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="View Details"
+      icon="pi pi-eye"
+      styleClass="p-button-outlined"
+      (onClick)="onViewDetails()">
+    </p-button>
+    <p-button
+      label="Favorite"
+      icon="pi pi-heart"
+      styleClass="p-button-text"
+      (onClick)="onFavorite()">
+    </p-button>
+  </ng-template>
+</p-card>

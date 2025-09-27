@@ -1,0 +1,39 @@
+<p-card class="llm-agent-card">
+  <ng-template pTemplate="header">
+    <div class="agent-header">
+      <i class="pi pi-robot"></i>
+      <h3>AI Real Estate Assistant</h3>
+    </div>
+  </ng-template>
+
+  <p-scrollpanel class="messages-container">
+    <div class="messages">
+      @for (message of messages; track message.text) {
+        <div class="message" [class.user-message]="message.isUser" [class.ai-message]="!message.isUser">
+          <div class="message-content">
+            {{ message.text }}
+          </div>
+        </div>
+      }
+    </div>
+  </p-scrollpanel>
+
+  <ng-template pTemplate="footer">
+    <div class="input-container">
+      <textarea
+        pInputTextarea
+        [(ngModel)]="userInput"
+        placeholder="Ask me about properties, market trends, or investment advice..."
+        rows="2"
+        (keydown.enter)="sendMessage()"
+        class="message-input">
+      </textarea>
+      <p-button
+        icon="pi pi-send"
+        (onClick)="sendMessage()"
+        [disabled]="!userInput.trim()"
+        styleClass="send-button">
+      </p-button>
+    </div>
+  </ng-template>
+</p-card>

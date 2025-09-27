@@ -1,0 +1,11 @@
+<div class="bottom-nav">
+  @for (item of menuItems; track item.label) {
+    <p-button
+      [icon]="item.icon"
+      [routerLink]="item.routerLink"
+      styleClass="p-button-text p-button-plain"
+      [pTooltip]="item.label"
+      tooltipPosition="top">
+    </p-button>
+  }
+</div>

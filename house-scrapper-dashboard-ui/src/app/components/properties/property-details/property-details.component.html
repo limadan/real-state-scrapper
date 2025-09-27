@@ -1,0 +1,77 @@
+<div class="property-details">
+  <div class="property-header">
+    <img [src]="property.imageUrl" [alt]="property.title" class="main-image" />
+    <div class="header-info">
+      <h1>{{ property.title }}</h1>
+      <p class="address">{{ property.address }}</p>
+      <p class="price">${{ property.price | number }}</p>
+      <div class="actions">
+        <p-button
+          label="Contact Agent"
+          icon="pi pi-phone"
+          (onClick)="onContactAgent()">
+        </p-button>
+        <p-button
+          label="Schedule Tour"
+          icon="pi pi-calendar"
+          styleClass="p-button-outlined"
+          (onClick)="onScheduleTour()">
+        </p-button>
+      </div>
+    </div>
+  </div>
+
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0">Overview</p-tab>
+      <p-tab value="1">Virtual Tour</p-tab>
+      <p-tab value="2">Map</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <div class="overview">
+          <div class="specs">
+            <div class="spec-item">
+              <i class="pi pi-bed"></i>
+              <span>{{ property.bedrooms }} Bedrooms</span>
+            </div>
+            <div class="spec-item">
+              <i class="pi pi-bath"></i>
+              <span>{{ property.bathrooms }} Bathrooms</span>
+            </div>
+            <div class="spec-item">
+              <i class="pi pi-home"></i>
+              <span>{{ property.area }} sqft</span>
+            </div>
+          </div>
+          <p class="description">
+            This beautiful property offers modern amenities and comfortable living spaces.
+            Perfect for families or professionals looking for a convenient location.
+          </p>
+        </div>
+      </p-tabpanel>
+      <p-tabpanel value="1">
+        <div class="virtual-tour">
+          <iframe
+            [src]="property.virtualTourUrl || 'https://example.com/virtual-tour'"
+            width="100%"
+            height="400"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </p-tabpanel>
+      <p-tabpanel value="2">
+        <div class="map-container">
+          <iframe
+            [src]="'https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=' + encodeURIComponent(property.address)"
+            width="100%"
+            height="400"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>
