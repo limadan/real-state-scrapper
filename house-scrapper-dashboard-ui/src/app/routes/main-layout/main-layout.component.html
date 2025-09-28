@@ -1,0 +1,20 @@
+<div class="main-layout">
+  <header>
+    <h1 class="m-0 p-4">House Scrapper</h1>
+  </header>
+
+  
+  <div class="main-content">
+    <div class="side-desktop-menu hidden lg:block">
+      <p-menu [model]="items"></p-menu>
+    </div>
+
+    <main class="router-outlet-container">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <footer class="bottom-mobile-menu block lg:hidden">
+    <app-mobile-navbar [items]="items"></app-mobile-navbar>
+  </footer>
+</div>

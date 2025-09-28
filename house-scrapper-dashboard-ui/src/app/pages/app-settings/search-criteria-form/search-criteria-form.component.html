@@ -1,0 +1,133 @@
+<p-card class="search-form-card">
+  <ng-template pTemplate="header">
+    <h3>Search Criteria</h3>
+    <h5>Custom the search criteria used by the scrapers the way you want</h5>
+  </ng-template>
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="location">Location</label>
+      <input
+        pInputText
+        id="location"
+        formControlName="location"
+        placeholder="Enter city, state, or zip code"
+        class="w-full"
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="minPrice">Min Price</label>
+        <p-slider
+          formControlName="minPrice"
+          [min]="0"
+          [max]="5000000"
+          [step]="50000"
+        >
+        </p-slider>
+        <span class="slider-value">${{ searchForm.get('minPrice')?.value | number }}</span>
+      </div>
+
+      <div class="form-field">
+        <label for="maxPrice">Max Price</label>
+        <p-slider
+          formControlName="maxPrice"
+          [min]="0"
+          [max]="5000000"
+          [step]="50000"
+          >
+        </p-slider>
+        <span class="slider-value">${{ searchForm.get('maxPrice')?.value | number }}</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="minBedrooms">Min Bedrooms</label>
+        <p-select
+          formControlName="minBedrooms"
+          [options]="bedroomsOptions"
+          placeholder="Any"
+          >
+        </p-select>
+      </div>
+
+      <div class="form-field">
+        <label for="maxBedrooms">Max Bedrooms</label>
+        <p-select
+          formControlName="maxBedrooms"
+          [options]="bedroomsOptions"
+          placeholder="Any"
+        >
+        </p-select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="minBathrooms">Min Bathrooms</label>
+        <p-select
+          formControlName="minBathrooms"
+          [options]="bathroomsOptions"
+          placeholder="Any"
+        >
+        </p-select>
+      </div>
+
+      <div class="form-field">
+        <label for="maxBathrooms">Max Bathrooms</label>
+        <p-select
+          formControlName="maxBathrooms"
+          [options]="bathroomsOptions"
+          placeholder="Any"
+        >
+        </p-select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="minArea">Min Area (sqft)</label>
+        <p-slider
+          formControlName="minArea"
+          [min]="0"
+          [max]="10000"
+          [step]="100"
+        >
+        </p-slider>
+        <span class="slider-value">{{ searchForm.get('minArea')?.value | number }} sqft</span>
+      </div>
+
+      <div class="form-field">
+        <label for="maxArea">Max Area (sqft)</label>
+        <p-slider
+          formControlName="maxArea"
+          [min]="0"
+          [max]="10000"
+          [step]="100"
+        >
+        </p-slider>
+        <span class="slider-value">{{ searchForm.get('maxArea')?.value | number }} sqft</span>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="form-actions">
+      <p-button
+        label="Reset"
+        icon="pi pi-refresh"
+        styleClass="p-button-outlined"
+        (onClick)="resetForm()">
+      </p-button>
+      <p-button
+        label="Search"
+        icon="pi pi-search"
+        type="submit"
+        (onClick)="onSubmit()"
+        [disabled]="searchForm.invalid">
+      </p-button>
+    </div>
+  </ng-template>
+</p-card>

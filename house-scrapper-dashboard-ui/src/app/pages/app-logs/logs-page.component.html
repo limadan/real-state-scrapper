@@ -1,0 +1,29 @@
+<div class="w-full">
+  <div class="mb-4 w-full">
+    <p-card header="Errors & Warnings (Last Hour)">
+      <p-chart type="line" [data]="chartData" [options]="chartOptions" height="300px"></p-chart>
+    </p-card>
+  </div>
+  <div class="w-full">
+    <p-card header="Log Entries">
+      <p-table [value]="logs" [scrollable]="true" scrollHeight="500px">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Timestamp</th>
+            <th>Level</th>
+            <th>Message</th>
+            <th>Component</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-log>
+          <tr>
+            <td>{{ log.timestamp | date:'short' }}</td>
+            <td [ngClass]="{'error': log.level === 'Error', 'warning': log.level === 'Warning'}">{{ log.level }}</td>
+            <td>{{ log.message }}</td>
+            <td>{{ log.component }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>

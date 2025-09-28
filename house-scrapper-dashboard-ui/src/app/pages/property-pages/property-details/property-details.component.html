@@ -1,0 +1,48 @@
+<div class="property-details">
+  <div class="property-header">
+    <img [src]="property.imageUrl" [alt]="property.title" class="main-image" />
+    <div class="header-info">
+      <h1>{{ property.title }}</h1>
+      <p class="address">{{ property.address }}</p>
+      <p class="price">${{ property.price | number }}</p>
+      <div class="details">
+        <span>
+          {{ property.bedrooms }} Beds</span>
+        <span>
+          {{ property.bathrooms }} Baths</span>
+        <span>
+          <i class="pi pi-home"></i>{{ property.area }} sqft</span>
+      </div>
+      <div class="actions">
+        @if(property.virtualTourUrl) {
+        <a [href]="property.virtualTourUrl" target="_blank" rel="noopener noreferrer">
+          <p-button label="Check this property on source" icon="pi pi-external-link"
+            styleClass="p-button-outlined p-button-lg"></p-button>
+        </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <p-tabs value="1">
+    <p-tablist>
+      <p-tab value="1">Map</p-tab>
+      <p-tab value="2">LLM Agent</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="1">
+        <div class="map-container">
+          <iframe
+            [src]="'https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=' + encodeURIComponent(property.address) | safe: 'resourceUrl'"
+            width="100%" height="400" frameborder="0" allowfullscreen>
+          </iframe>
+        </div>
+      </p-tabpanel>
+      <p-tabpanel value="2">
+        <div class="llm-agent">
+          <app-llm-agent-container></app-llm-agent-container>
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>

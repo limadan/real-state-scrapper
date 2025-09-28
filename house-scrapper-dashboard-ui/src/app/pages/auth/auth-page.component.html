@@ -1,0 +1,31 @@
+<p-toast></p-toast>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <i class="pi pi-user user-icon"></i>
+      <h2>Login</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="p-field">
+        <label for="password">Password</label>
+        <p-password
+          id="password"
+          formControlName="password"
+          placeholder="Enter password"
+          styleClass="w-full"
+          [toggleMask]="true"
+          [feedback]="false"
+        ></p-password>
+      </div>
+
+      <p-button
+        type="submit"
+        label="Login"
+        [disabled]="loginForm.invalid"
+        styleClass="w-full"
+      ></p-button>
+    </form>
+  </div>
+</div>

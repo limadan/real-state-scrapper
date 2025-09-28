@@ -1,0 +1,29 @@
+<p-card>
+  <header>
+    <h3>Weekly email list</h3>
+    <h5>Custom who you want to receive the weekly email</h5>
+  </header>
+  <div class="p-fluid">
+    <div class="flex gap-2 mb-3">
+      <input type="text" pInputText [formControl]="emailInput" name="emailInput" placeholder="Add new email" />
+      <p-button label="Add" icon="pi pi-plus"></p-button>
+    </div>
+
+    <p-table [value]="emails">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-email>
+        <tr>
+          <td>{{ email }}</td>
+          <td>
+            <p-button label="Delete" icon="pi pi-trash" severity="danger" />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-card>

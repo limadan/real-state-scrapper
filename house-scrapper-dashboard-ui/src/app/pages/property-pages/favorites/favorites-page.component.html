@@ -1,0 +1,13 @@
+<div class="favorites-page">
+  <h2>Your Favorite Properties</h2>
+  <div class="grid gap-2">
+    @for (property of favoriteProperties; track property.id) {
+    <div class="col-12">
+      <app-favorite-card [property]="property" (unfavorite)="onUnfavorite($event)"></app-favorite-card>
+    </div>
+    }
+  </div>
+  @if (favoriteProperties.length === 0) {
+  <p>No favorite properties yet.</p>
+  }
+</div>

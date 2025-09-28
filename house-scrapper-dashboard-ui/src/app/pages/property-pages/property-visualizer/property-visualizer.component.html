@@ -1,0 +1,42 @@
+<div class="dashboard-visualizer">
+    <div>
+        <h2>All homes</h2>
+        <h3>See the latest properties scraped by our bots!</h3>
+    </div>
+    <p-panel header="Filters" [toggleable]="true" [collapsed]="false" class="mb-4">
+        <form [formGroup]="filterForm" class="flex flex-column md:flex-row gap-3">
+            <div class="flex flex-column md:flex-row gap-3 w-full">
+                <div class="flex flex-column">
+                    <label for="minPrice">Min Price</label>
+                    <p-inputNumber id="minPrice" formControlName="minPrice" mode="currency" currency="USD" locale="en-US" placeholder="Min Price"></p-inputNumber>
+                </div>
+                <div class="flex flex-column">
+                    <label for="maxPrice">Max Price</label>
+                    <p-inputNumber id="maxPrice" formControlName="maxPrice" mode="currency" currency="USD" locale="en-US" placeholder="Max Price"></p-inputNumber>
+                </div>
+                <div class="flex flex-column">
+                    <label for="bedrooms">Min Bedrooms</label>
+                    <p-select id="bedrooms" formControlName="bedrooms" [options]="[{label: 'Any', value: null}, {label: '1+', value: 1}, {label: '2+', value: 2}, {label: '3+', value: 3}, {label: '4+', value: 4}]" placeholder="Select Bedrooms"></p-select>
+                </div>
+                <div class="flex flex-column">
+                    <label for="parking">Min Parking</label>
+                    <p-select id="parking" formControlName="parking" [options]="[{label: 'Any', value: null}, {label: '0+', value: 0}, {label: '1+', value: 1}, {label: '2+', value: 2}, {label: '3+', value: 3}]" placeholder="Select Parking"></p-select>
+                </div>
+                <div class="flex flex-column">
+                    <label for="location">Location</label>
+                    <input pInputText id="location" formControlName="location" placeholder="Enter city or address">
+                </div>
+            </div>
+        </form>
+    </p-panel>
+    <div class="grid">
+        @for (property of filteredProperties; track property.title) {
+        <div class="col-12 md:col-6 xl:col-4 mb-3">
+            <app-property-card [property]="property"></app-property-card>
+        </div>
+        }
+    </div>
+    <div class="flex justify-content-center mb-4">
+        <p-button label="See more" icon="pi pi-plus" styleClass="p-button-primary p-button-lg"></p-button>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+::ng-deep {
+    .p-menubar .p-menubar-button {
+        display: none !important;
+        padding: 0 !important;
+    }
+
+    .p-menubar-mobile {
+        padding: 0 !important;
+
+
+    }
+
+    .p-menubar-root-list {
+        display: flex !important;
+        justify-content: space-around !important;
+        flex-direction: row !important;
+        position: static !important;
+        transform: none !important;
+        border: none !important;
+        box-shadow: none !important;
+
+        .p-menubar-item {
+            width: auto !important;
+
+            @media (max-width: 400px) {
+                font-size: 12px !important;
+            }
+
+            .p-menubar-item-link {
+                flex-direction: column !important;
+            }
+        }
+    }
+}
