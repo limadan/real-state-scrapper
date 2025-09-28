@@ -20,25 +20,17 @@
         - [X] Implement a basic JWT authentication system
 
 - [ ] Front-end work
-    - [ ] Create the templates for the base components that will be used in the dashboard.
-            - [ ] Side menu for desktop.
-            - [ ] Bottom nav-bar for mobile.
-            - [ ] Property card visualization.
-            - [ ] Property details visualization.
-            - [ ] LLM Agent Container.
-            - [ ] Search criteria form.
-            - [ ] Email listing form.
-    - [ ] Create the templates for the screens of the app
-            - [ ] Main layout with side menu and bottom nav-bar
-            - [ ] A page to see all properties
-            - [ ] A page to see 
+    - [X] Create the templates for the base components that will be used in the dashboard.
+            - [X] Side menu for desktop.
+            - [X] Bottom nav-bar for mobile.
+            - [X] Property card visualization.
+            - [X] Property details visualization.
+            - [X] LLM Agent Container.
+            - [X] Search criteria form.
+            - [X] Email listing form.
+    - [X] Create the templates for the screens of the app
     - [ ] Integrate the front-end dashboard with the back-end API.
-
-- [ ] Implement a basic JWT authentication system
-    - [ ] Store the password in the env file of the back-end
-    - [ ] Create the authentication endpoint
-    - [ ] Create the front-end page to authenticate
-    - [ ] Block all endpoints to be accessed without authentication
+    - [ ] Fix responsiveness minor issues
 
 ## Phase 3: AI Analysis Integration
 - [ ] Integrate with an LLM API.
