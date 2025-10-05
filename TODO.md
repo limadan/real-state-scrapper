@@ -30,6 +30,11 @@
             - [X] Email listing form.
     - [X] Create the templates for the screens of the app
     - [ ] Integrate the front-end dashboard with the back-end API.
+        - [ ] Integrate auth endpoints
+        - [ ] Integrate property endpoints
+        - [ ] Integrate search criteria endpoints
+        - [ ] Integrate email endpoints
+        - [ ] Integrate logs endpoints
     - [ ] Fix responsiveness minor issues
 
 ## Phase 3: AI Analysis Integration

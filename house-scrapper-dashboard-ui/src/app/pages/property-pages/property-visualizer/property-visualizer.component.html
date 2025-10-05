@@ -29,14 +29,15 @@
             </div>
         </form>
     </p-panel>
+    <div *ngIf="loading" class="loading-message">Loading properties...</div>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
     <div class="grid">
-        @for (property of filteredProperties; track property.title) {
-        <div class="col-12 md:col-6 xl:col-4 mb-3">
-            <app-property-card [property]="property"></app-property-card>
+        <div *ngFor="let property of filteredProperties; trackBy: trackByPropertyId" class="col-12 md:col-6 xl:col-4 mb-3">
+            <app-property-card [property]="property" (favoriteChanged)="onFavoriteChanged($event)"></app-property-card>
         </div>
-        }
     </div>
     <div class="flex justify-content-center mb-4">
-        <p-button label="See more" icon="pi pi-plus" styleClass="p-button-primary p-button-lg"></p-button>
+        <p-button label="See more" icon="pi pi-plus" styleClass="p-button-primary p-button-lg" (onClick)="loadMore()"></p-button>
     </div>
 </div>

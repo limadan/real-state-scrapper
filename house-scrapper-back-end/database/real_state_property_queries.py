@@ -56,17 +56,26 @@ def mark_properties_seen(property_ids):
     conn.commit()
     conn.close()
 
-def get_all_properties():
+def get_all_properties(limit: int = None, offset: int = 0):
     """
-    Retrieves all properties from the database.
+    Retrieves all properties from the database with optional pagination.
     """
     conn = get_db_connection()
-    query = """
-        SELECT id, source_id, source_website, price, address, number_of_rooms, number_of_parking_spaces, photo_url, access_link, favorite
-        FROM real_state_property
-        ORDER BY created_at DESC
-    """
-    cursor = conn.execute(query)
+    if limit is not None:
+        query = """
+            SELECT id, source_id, source_website, price, address, number_of_rooms, number_of_parking_spaces, photo_url, access_link, favorite
+            FROM real_state_property
+            ORDER BY created_at DESC
+            LIMIT ? OFFSET ?
+        """
+        cursor = conn.execute(query, (limit, offset))
+    else:
+        query = """
+            SELECT id, source_id, source_website, price, address, number_of_rooms, number_of_parking_spaces, photo_url, access_link, favorite
+            FROM real_state_property
+            ORDER BY created_at DESC
+        """
+        cursor = conn.execute(query)
     results = cursor.fetchall()
     conn.close()
     return results

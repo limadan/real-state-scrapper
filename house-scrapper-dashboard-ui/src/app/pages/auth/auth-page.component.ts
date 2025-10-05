@@ -6,6 +6,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-auth-page',
@@ -27,7 +28,8 @@ export class AuthPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -45,24 +47,26 @@ export class AuthPageComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       const password = this.loginForm.value.password;
-      if (password === 'admin') {
-        localStorage.setItem('authToken', 'mock-token');
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Login Successful',
-          detail: 'Welcome to the dashboard!'
-        });
-        this.loginForm.reset();
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 1000);
-      } else {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Login Failed',
-          detail: 'Invalid password.'
-        });
-      }
+      this.authService.login(password).subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Login Successful',
+            detail: 'Welcome to the dashboard!'
+          });
+          this.loginForm.reset();
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 1000);
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Login Failed',
+            detail: error.error.detail || 'Invalid password.'
+          });
+        }
+      });
     }
   }
 }

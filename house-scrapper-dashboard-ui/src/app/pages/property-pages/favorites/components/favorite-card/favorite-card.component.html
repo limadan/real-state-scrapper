@@ -1,21 +1,15 @@
 <p-card class="favorite-card">
   <div class="card-content flex flex-column md:flex-row">
     <div class="details flex-1">
-      <h3>{{ property.title }}</h3>
+      <h3>{{ property.address }}</h3>
       <p class="address">{{ property.address }}</p>
       <p class="price">${{ property.price | number }}</p>
       <div class="property-details">
         <span class="detail-item">
-          <i class="pi pi-bed"></i> {{ property.bedrooms }} beds
+          <i class="pi pi-bed"></i> {{ property.number_of_rooms }} beds
         </span>
         <span class="detail-item">
-          <i class="pi pi-bath"></i> {{ property.bathrooms }} baths
-        </span>
-        <span class="detail-item">
-          <i class="pi pi-car"></i> {{ property.parking }} parking
-        </span>
-        <span class="detail-item">
-          <i class="pi pi-home"></i> {{ property.area }} sqft
+          <i class="pi pi-car"></i> {{ property.number_of_parking_spaces }} parking
         </span>
       </div>
       <div class="actions">
@@ -40,7 +34,7 @@
       </div>
     </div>
     <div class="image-container">
-      <img [src]="property.imageUrl" [alt]="property.title" class="property-image" />
+      <img [src]="property.photo_url" [alt]="property.address" class="property-image" />
     </div>
   </div>
 </p-card>

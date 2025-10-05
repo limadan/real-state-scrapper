@@ -27,8 +27,8 @@ export class FavoriteCardComponent {
   }
 
   onOpenWebsite() {
-    if (this.property.virtualTourUrl) {
-      window.open(this.property.virtualTourUrl, '_blank');
+    if (this.property.access_link) {
+      window.open(this.property.access_link, '_blank');
     }
   }
 }

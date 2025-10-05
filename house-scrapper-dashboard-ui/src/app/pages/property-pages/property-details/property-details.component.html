@@ -1,25 +1,26 @@
 <div class="property-details">
   <div class="property-header">
-    <img [src]="property.imageUrl" [alt]="property.title" class="main-image" />
+    <img [src]="property.photo_url" [alt]="property.address" class="main-image" />
     <div class="header-info">
-      <h1>{{ property.title }}</h1>
+      <h1>{{ property.source_website }} Property</h1>
       <p class="address">{{ property.address }}</p>
       <p class="price">${{ property.price | number }}</p>
       <div class="details">
         <span>
-          {{ property.bedrooms }} Beds</span>
+          {{ property.number_of_rooms }} Rooms</span>
+        @if(property.number_of_parking_spaces){
+          <span>{{ property.number_of_parking_spaces }} Parking</span>
+        }
+
         <span>
-          {{ property.bathrooms }} Baths</span>
-        <span>
-          <i class="pi pi-home"></i>{{ property.area }} sqft</span>
+          <i class="pi pi-heart" [class.favorited]="property.favorite"></i>
+          {{ property.favorite ? 'Favorited' : 'Not Favorited' }}</span>
       </div>
       <div class="actions">
-        @if(property.virtualTourUrl) {
-        <a [href]="property.virtualTourUrl" target="_blank" rel="noopener noreferrer">
+        <a [href]="property.source_website" target="_blank" rel="noopener noreferrer">
           <p-button label="Check this property on source" icon="pi pi-external-link"
             styleClass="p-button-outlined p-button-lg"></p-button>
         </a>
-        }
       </div>
     </div>
   </div>

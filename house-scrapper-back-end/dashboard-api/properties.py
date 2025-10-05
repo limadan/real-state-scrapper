@@ -23,11 +23,12 @@ class Property(BaseModel):
     favorite: bool = False
 
 @router.get("/properties", response_model=List[Property])
-def get_properties(current_user: str = Depends(get_current_user)):
+def get_properties(page: int = 1, size: int = 50, current_user: str = Depends(get_current_user)):
     """
-    Get all properties.
+    Get all properties with pagination.
     """
-    properties = get_all_properties()
+    offset = (page - 1) * size
+    properties = get_all_properties(limit=size, offset=offset)
     return [
         {
             "id": row[0],

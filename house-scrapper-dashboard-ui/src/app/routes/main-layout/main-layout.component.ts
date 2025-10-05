@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MobileNavbarComponent } from "./components/mobile-navbar/mobile-navbar.component";
+import { AuthService } from '../../pages/auth/services/auth.service';
 
 @Component({
   standalone: true,
@@ -17,7 +18,7 @@ import { MobileNavbarComponent } from "./components/mobile-navbar/mobile-navbar.
 export class MainLayoutComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.items = [
@@ -40,7 +41,17 @@ export class MainLayoutComponent implements OnInit {
         label: 'Logs',
         icon: 'pi pi-exclamation-circle',
         routerLink: '/app-logs',
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => this.logout()
       }
     ];
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
