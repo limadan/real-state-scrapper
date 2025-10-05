@@ -34,4 +34,4 @@ jobs:
         EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
       run: |
         cd house-scrapper-back-end
-        app=production python -m notifier_service.main
+        app=production python ./notifier_service/main.py 
